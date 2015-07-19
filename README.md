@@ -4,8 +4,8 @@ Conway's Game of Life implemented in Haskell using repa and SDL
 About 
 ----------
 
-This is a Haskell implementation of Conway's Game of Life in that uses repa
-for efficient arrays and parallelization and SDL for graphics and 
+This is a Haskell implementation of Conway's Game of Life that uses repa
+for efficient arrays and parallelization, and SDL for graphics and 
 keyboard/mouse input
 
 Usage
