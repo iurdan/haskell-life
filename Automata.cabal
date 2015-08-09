@@ -19,7 +19,7 @@ executable Automata
   main-is:             Main.hs
   -- other-modules:       
   other-extensions:    TemplateHaskell, QuasiQuotes 
-  build-depends:       base >=4.7 && <4.8
+  build-depends:       base >=4.7
                      , SDL
                      , repa
                      , repa-algorithms

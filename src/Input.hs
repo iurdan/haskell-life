@@ -2,7 +2,8 @@ module Input where
 
 import Life
 import Data.Char
-import Data.Array.Repa (Z(..),(:.)(..),computeP,traverse,extent)
+import qualified Data.Array.Repa as R
+import Data.Array.Repa (Z(..),(:.)(..),computeP,extent)
 
 -- Life 1.06 text format input
 
@@ -19,7 +20,7 @@ parseFile fp grid = do
   file <- readFile fp
   let (Z :. w :. h) = extent grid
       coords = map parseLine $ lines file
-  computeP $ traverse grid id (\_ sh@(Z :. a :. b) ->
+  computeP $ R.traverse grid id (\_ sh@(Z :. a :. b) ->
     if (elem (Just (a - div w 2, b - div h 2)) coords)
       then 1 
       else 0)
