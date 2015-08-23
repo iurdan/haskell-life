@@ -40,6 +40,9 @@ r
 c
 : Clear grid
 
+n
+: Advance one generation
+
 RETURN
 : Exit
 
