@@ -15,7 +15,7 @@ draw :: Int -> Grid -> Surface -> IO ()
 draw s grid surface = do
   let (Z :. w :. h) = R.extent grid
   forM_ [(x,y) | x <- [0..(w-1)], y <- [0..(h-1)]] $ \(x,y) -> do
-    let rect = Rect (x*s) (y*s) (s-1) (s-1)
+    let rect = Rect (x*s) (y*s) s s
         drawCell = fillRect surface (Just rect) . Pixel
     drawCell $ case grid ! (Z :. x :. y) of
       1 -> 0x34be5b
