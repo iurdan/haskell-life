@@ -21,12 +21,10 @@ cabal build
 And run it with
 
 ~~~~
-cabal run <cell size> <path to life_1.06 pattern file> +RTS -Nx
+cabal run <cell size> [path to life_1.06 pattern file] +RTS -Nx
 ~~~~
 
 Where x is the number of cores of your computer.
-
-First two arguments are optional.
 
 Keyboard
 ---------
