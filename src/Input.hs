@@ -9,10 +9,10 @@ import Data.Array.Repa (Z(..),(:.)(..),computeP,extent)
 
 -- Read cell coordinates
 parseLine :: String -> Maybe (Int,Int)
-parseLine cs | or (map isNotNum cs) = Nothing
+parseLine cs | any isNotNum cs = Nothing
              | length (words cs) /= 2 = Nothing
              | otherwise = Just $ (\[a,b] -> (read a, read b)) (words cs)
-    where isNotNum c = not (isDigit c) && not (elem c " -\r") 
+    where isNotNum c = not (isDigit c) && notElem c " -\r"
 
 -- Read a pattern file and return a grid with the pattern
 parseFile :: FilePath -> Grid -> IO Grid
@@ -21,6 +21,6 @@ parseFile fp grid = do
   let (Z :. w :. h) = extent grid
       coords = map parseLine $ lines file
   computeP $ R.traverse grid id (\_ sh@(Z :. a :. b) ->
-    if (elem (Just (a - div w 2, b - div h 2)) coords)
+    if (Just (a - div w 2, b - div h 2)) `elem` coords
       then 1 
       else 0)

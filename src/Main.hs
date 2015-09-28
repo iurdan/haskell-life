@@ -23,9 +23,8 @@ draw s grid surface = do
 
 -- Toggle the cell in the given position
 modifyCell :: (Int, Int) -> Grid -> IO Grid
-modifyCell (x,y) grid = do
-  R.computeP $ R.traverse grid id (\_ sh@(Z :. a :. b) ->
-    if ((a,b) == (x,y))
+modifyCell (x,y) grid = R.computeP $ R.traverse grid id (\_ sh@(Z :. a :. b) ->
+    if (a,b) == (x,y)
       then case grid ! sh of
         0 -> 1
         _ -> 0
@@ -33,9 +32,8 @@ modifyCell (x,y) grid = do
 
 -- Set the cell in the given position to 1
 liveCell :: (Int,Int) -> Grid -> IO Grid
-liveCell (x,y) grid = do
-  R.computeP $ R.traverse grid id (\_ sh@(Z :. a :. b) ->
-    if ((a,b) == (x,y))
+liveCell (x,y) grid = R.computeP $ R.traverse grid id (\_ sh@(Z :. a :. b) ->
+    if (a,b) == (x,y)
       then 1
       else grid ! sh)
 
@@ -52,7 +50,7 @@ editMode s surface gridR drawR = do
     -- Toggle a cell when it is clicked
     MouseButtonDown x y _ -> do
       grid <- readIORef gridR
-      modifyCell ((fromIntegral x `div` s),(fromIntegral y `div` s)) grid
+      modifyCell (fromIntegral x `div` s, fromIntegral y `div` s) grid
           >>= writeIORef gridR
       grid <- readIORef gridR
       draw s grid surface
@@ -67,7 +65,7 @@ editMode s surface gridR drawR = do
       if dr
         then do
           grid <- readIORef gridR
-          liveCell ((fromIntegral x `div` s),(fromIntegral y `div` s)) grid
+          liveCell (fromIntegral x `div` s,fromIntegral y `div` s) grid
               >>= writeIORef gridR
           grid <- readIORef gridR
           draw s grid surface
@@ -134,7 +132,7 @@ main = do
       h = videoInfoHeight info
       -- First argument is cell size,
       -- if any argument is given default size is 8
-      s = if length args > 0 
+      s = if not (null args) 
             then read (head args)
             else 8
   zeros <- zeroGrid (w `div` s) (h `div` s)
